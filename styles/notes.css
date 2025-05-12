@@ -1,0 +1,69 @@
+:root {
+    --card-width: 320px;
+    --card-height: 500px;
+    --carousel-radius: 800px;
+    --transition-speed: 0.8s;
+    --card-background: rgba(255, 255, 255, 0.15);
+    --card-border: rgba(255, 255, 255, 0.2);
+}
+
+.card.notes-card 
+{
+    position: absolute;
+    width: var(--card-width);
+    height: var(--card-height);
+    left: calc(50% - var(--card-width) / 2);
+    top: calc(50% - var(--card-height) / 2);
+    transform-style: preserve-3d;
+    transition: transform var(--transition-speed) ease-in-out;
+    pointer-events: all;
+    user-select: none;
+    will-change: transform;
+    backface-visibility: visible;
+    cursor: pointer;
+    background: var(--card-background);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+}
+
+.card.notes-card.content
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    text-align: center;
+    gap: 10px;
+    backface-visibility: visible;
+    margin-top: 0px;
+}
+
+.card.notes-card img{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.card.notes-card h2{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.card.notes-card :active{
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1) !important;
+}
+

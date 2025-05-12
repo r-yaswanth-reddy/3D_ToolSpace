@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Carousel</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/carousel.css">
+    <!-- Card-specific styles (add more as needed) -->
+    <link rel="stylesheet" href="styles/cards/calculator.css">
+    <link rel="stylesheet" href="styles/cards/brave.css">
+    <link rel="stylesheet" href="styles/cards/chrome.css">
+    <link rel="stylesheet" href="styles/cards/notes.css">
+    <link rel="stylesheet" href="styles/cards/calender.css">
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <!-- Calculator Card -->
+            <div class="card calculator-card">
+                <div class="card calculator-card content">
+                    <img src="images/calculator.png" alt="Calculator">
+                    <h2>Calculator</h2>
+                    <div class="recent-activity">Recent Activity</div>
+                </div>
+                
+            </div>
+            <!-- Brave Card -->
+            <div class="card brave-card">
+                <div class="card brave-card content">
+                    <img src="images/brave.jpeg" alt="Brave">
+                    <h2>Brave</h2>
+                    <div class="recent-activity">Recent Activity</div>
+                </div>
+                
+            </div>
+            <!-- Chrome Card -->
+            <div class="card chrome-card">
+                <div class="card chrome-card content">
+                    <img src="images/chrome.jpeg" alt="Chrome">
+                    <h2>Chrome</h2>
+                    <div class="recent-activity">Recent Activity</div>
+                </div>
+            
+            </div>
+            <!-- Notes Card -->
+            <div class="card notes-card">
+                <div class="card notes-card content">
+                    <img src="images/notes.jpeg" alt="Notes">
+                    <h2>Notes</h2>
+                    <div class="recent-activity">Recent Activity</div>
+                </div>
+                
+            </div>
+            <!-- Calender Card -->
+            <div class="card calender-card">
+                <div class="card calender-card content">
+                    <img src="images/calender.png" alt="Calender">
+                    <h2>Calender</h2>
+                    <div class="recent-activity">Recent Activity</div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <div class="controls">
+            <button id="prevBtn">&#8592;</button>
+            <button id="nextBtn">&#8594;</button>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <!-- Card-specific scripts (add more as needed) -->
+    <script src="js/cards/calculator.js"></script>
+    <script src="js/cards/brave.js"></script>
+    <script src="js/cards/chrome.js"></script>
+    <script src="js/cards/notes.js"></script>
+    <script src="js/cards/calender.js"></script>
+    
+</body>
+</html>

@@ -15,30 +15,30 @@ const apps = [
         command: 'start brave'
     },
     {
-        name: 'VS Code',
-        icon: 'https://code.visualstudio.com/assets/images/code-stable.png',
-        description: 'Powerful code editor',
+        name: 'Google notes',
+        icon: 'https://png.pngtree.com/png-vector/20200908/ourmid/pngtree-notes-icon-vector-png-image_2340328.jpg',
+        description: 'maintain notes',
         history: ['project1.js', 'styles.css', 'index.html'],
         command: 'start code'
     },
     {
-        name: 'Outlook',
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg/2203px-Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg.png',
-        description: 'Email and calendar management',
+        name: 'Translator',
+        icon: 'https://image.similarpng.com/file/similarpng/very-thumbnail/2020/12/Google-translate-icon-design-on-transparent-background-PNG.png',
+        description: 'make translation',
         history: ['Meeting with Team', 'Project Update', 'Weekly Report'],
         command: 'start outlook'
     },
     {
-        name: 'WhatsApp',
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/512px-WhatsApp.svg.png',
-        description: 'Messaging and video calls',
+        name: 'Calculator',
+        icon: 'https://png.pngtree.com/png-vector/20190115/ourmid/pngtree-vector-calculator-icon-png-image_319747.jpg',
+        description: 'Calculate things',
         history: ['Family Group', 'Work Chat', 'Mom'],
         command: 'start whatsapp'
     },
     {
-        name: 'Cursor',
-        icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp7tXRM3wf3N0LAqUTZchK7piHqrlBq2URxQ&s',
-        description: 'ai code editor',
+        name: 'Calender',
+        icon: 'https://i.pinimg.com/736x/5b/52/29/5b52296c015d0526f85926fa6203d0ce.jpg',
+        description: 'make your monthly plan',
         history: ['project1.js', 'styles.css', 'index.html'],
         command: 'start cursor'
     }
