@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D App Carousel</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Card Styles -->
+    <link rel="stylesheet" href="../styles/brave.css">
+    <link rel="stylesheet" href="../styles/chrome.css">
+    <link rel="stylesheet" href="../styles/translator.css">
+    <link rel="stylesheet" href="../styles/notes.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <link rel="stylesheet" href="../styles/calendar.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --carousel-radius: 400px;
+            --card-width: 320px;
+            --card-height: 480px;
+            --primary-color: #2196f3;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --background: #f5f5f5;
+            --card-background: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--background);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .carousel {
+            position: relative;
+            width: var(--carousel-radius);
+            height: var(--carousel-radius);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
+        }
+
+        .app-card {
+            position: absolute;
+            width: var(--card-width);
+            height: var(--card-height);
+            left: 50%;
+            top: 50%;
+            transform-origin: 50% 50% calc(var(--carousel-radius) / -2);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: calc(var(--card-width) / -2);
+            margin-top: calc(var(--card-height) / -2);
+            overflow: hidden;
+        }
+
+        .app-card iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            background: var(--card-background);
+            transform-origin: center;
+            transform: scale(1);
+        }
+
+        .app-card.active {
+            z-index: 100;
+        }
+
+        .app-card.active iframe {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05);
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--card-background);
+            border: none;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 20px;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .nav-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* Loading animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .card-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-secondary);
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --carousel-radius: 300px;
+                --card-width: 280px;
+                --card-height: 420px;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .prev-btn {
+                left: 10px;
+            }
+
+            .next-btn {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --carousel-radius: 250px;
+                --card-width: 240px;
+                --card-height: 360px;
+            }
+        }
+    </style>
+</head>
+<body class="bogy">
+    <div class="carousel-container">
+        <button class="nav-button prev-btn" title="Previous">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="carousel">
+            <!-- App cards will be dynamically inserted here -->
+        </div>
+        
+        <button class="nav-button next-btn" title="Next">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // App data with card paths
+        const apps = [
+            {
+                name: 'Chrome',
+                path: 'chrome.html',
+                command: 'start chrome'
+            },
+            {
+                name: 'Brave',
+                path: 'brave.html',
+                command: 'start brave'
+            },
+            {
+                name: 'Notes',
+                path: 'notes.html',
+                command: 'start code'
+            },
+            {
+                name: 'Translator',
+                path: 'translator.html',
+                command: 'start translator'
+            },
+            {
+                name: 'Calculator',
+                path: 'calculator.html',
+                command: 'start calculator'
+            },
+            {
+                name: 'Calendar',
+                path: 'calender.html',
+                command: 'start calendar'
+            }
+        ];
+
+        let currentFrontIndex = 0;
+        const totalApps = apps.length;
+        const angleStep = 360 / totalApps;
+        const carousel = document.querySelector('.carousel');
+
+        function updateCardPositions() {
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach((card, index) => {
+                const positionIndex = (index - currentFrontIndex + totalApps) % totalApps;
+                const angle = positionIndex * angleStep;
+                const radius = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--carousel-radius').trim());
+                
+                // Calculate position on the circle
+                const x = Math.sin(angle * Math.PI / 180) * radius / 2;
+                const z = Math.cos(angle * Math.PI / 180) * radius / 2;
+                
+                // Calculate rotation and scale based on position
+                const rotateY = angle;
+                const scale = z > 0 ? 1 : 0.8;
+                const opacity = z > 0 ? 1 : 0.7;
+                
+                // Apply transforms
+                card.style.transform = `translate3d(${x}px, 0, ${z}px) rotateY(${rotateY}deg) scale(${scale})`;
+                card.style.opacity = opacity;
+                card.style.zIndex = Math.round(z + 1000);
+
+                // Update active state
+                if (index === currentFrontIndex) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        function createAppCards() {
+            apps.forEach((app, index) => {
+                const card = document.createElement('div');
+                card.className = 'app-card';
+                card.dataset.index = index;
+                card.dataset.app = app.name.toLowerCase();
+
+                // Add loading indicator
+                const loading = document.createElement('div');
+                loading.className = 'card-loading';
+                loading.innerHTML = '<i class="fas fa-spinner"></i>';
+                card.appendChild(loading);
+
+                // Create iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = app.path;
+                iframe.onload = () => {
+                    loading.style.display = 'none';
+                    // Adjust iframe content for specific apps
+                    if (['calculator', 'notes', 'calendar'].includes(app.name.toLowerCase())) {
+                        try {
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            const body = iframeDoc.body;
+                            // Ensure content fits within iframe
+                            body.style.margin = '0';
+                            body.style.padding = '0';
+                            body.style.width = '100%';
+                            body.style.height = '100%';
+                            body.style.overflow = 'hidden';
+                        } catch (e) {
+                            console.warn('Could not adjust iframe content:', e);
+                        }
+                    }
+                };
+                card.appendChild(iframe);
+
+                card.addEventListener('click', () => {
+                    const clickedIndex = parseInt(card.dataset.index);
+                    if (clickedIndex === currentFrontIndex) {
+                        launchApp(app.command);
+                    } else {
+                        rotateToCard(clickedIndex);
+                    }
+                });
+
+                carousel.appendChild(card);
+            });
+            updateCardPositions();
+        }
+
+        function launchApp(command) {
+            try {
+                const shell = new ActiveXObject('WScript.Shell');
+                shell.Run(command, 1, false);
+            } catch (e) {
+                console.error('Failed to launch app:', e);
+            }
+        }
+
+        function rotateToCard(targetIndex) {
+            const diff = getShortestRotationPath(currentFrontIndex, targetIndex);
+            currentFrontIndex = (currentFrontIndex + diff + totalApps) % totalApps;
+            updateCardPositions();
+        }
+
+        function getShortestRotationPath(current, target) {
+            let diff = target - current;
+            if (diff > totalApps / 2) diff -= totalApps;
+            else if (diff < -totalApps / 2) diff += totalApps;
+            return diff;
+        }
+
+        function rotateOneStep(direction) {
+            currentFrontIndex = (currentFrontIndex + direction + totalApps) % totalApps;
+            updateCardPositions();
+        }
+
+        // Event Listeners
+        document.querySelector('.prev-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            rotateOneStep(-1);
+        });
+
+        document.querySelector('.next-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            rotateOneStep(1);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') rotateOneStep(-1);
+            if (e.key === 'ArrowRight') rotateOneStep(1);
+        });
+
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const direction = e.deltaY > 0 ? 1 : -1;
+            rotateOneStep(direction);
+        }, { passive: false });
+
+        // Start
+        createAppCards();
+    </script>
+</body>
+</html> 
