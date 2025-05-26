@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - 3D ToolSpace</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Welcome, <span id="userName">User</span>!</h1>
+            <div class="user-actions">
+                <a href="profile.html" class="btn-secondary">Profile</a>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <section class="recent-activity">
+            <h2>Recent Activity</h2>
+            <div class="activity-cards">
+                <div class="activity-card">
+                    <h3>Last Login</h3>
+                    <p id="lastLogin">Loading...</p>
+                </div>
+                <div class="activity-card">
+                    <h3>Tools Used</h3>
+                    <p id="toolsUsed">Loading...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-access">
+            <h2>Quick Access</h2>
+            <div class="tools-grid">
+                <a href="../main.html" class="tool-card">
+                    <div class="tool-icon">🛠️</div>
+                    <h3>3D Tools</h3>
+                    <p>Access all 3D modeling tools</p>
+                </a>
+                <a href="analytics.html" class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p>View usage statistics</p>
+                </a>
+                <a href="help.html" class="tool-card">
+                    <div class="tool-icon">❓</div>
+                    <h3>Help</h3>
+                    <p>Documentation and guides</p>
+                </a>
+                <a href="contact.html" class="tool-card">
+                    <div class="tool-icon">📝</div>
+                    <h3>Feedback</h3>
+                    <p>Send us your thoughts</p>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html> 

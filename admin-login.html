@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - App Launcher</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-box admin-box">
+            <h1>Admin Login</h1>
+            <form id="adminLoginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="adminEmail">Admin Email</label>
+                    <input type="email" id="adminEmail" name="adminEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminKey">Admin Key</label>
+                    <input type="password" id="adminKey" name="adminKey" required>
+                </div>
+                <div class="form-group remember-me">
+                    <input type="checkbox" id="adminRemember" name="adminRemember">
+                    <label for="adminRemember">Remember me</label>
+                </div>
+                <button type="submit" class="auth-btn admin-btn">Login as Admin</button>
+            </form>
+            <div class="auth-footer">
+                <a href="admin-forgot-password.html">Forgot Admin Access?</a>
+                <a href="login.html" class="back-link">← Back to Login Options</a>
+            </div>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html> 
