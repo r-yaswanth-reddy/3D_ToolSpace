@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - 3D ToolSpace</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profile-container">
+        <header class="profile-header">
+            <h1>Profile Settings</h1>
+            <a href="dashboard.html" class="btn-secondary">Back to Dashboard</a>
+        </header>
+
+        <div class="profile-content">
+            <div class="profile-sidebar">
+                <div class="avatar-section">
+                    <div class="avatar-preview">
+                        <img id="avatarPreview" src="../images/default-avatar.png" alt="Profile Avatar">
+                    </div>
+                    <button id="changeAvatarBtn" class="btn-secondary">Change Avatar</button>
+                    <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                </div>
+            </div>
+
+            <div class="profile-details">
+                <form id="profileForm" class="profile-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                        <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Changes</h2>
+            <p>Are you sure you want to save these changes?</p>
+            <div class="modal-actions">
+                <button id="confirmSave" class="btn-primary">Yes, Save</button>
+                <button id="cancelSave" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+</html> 

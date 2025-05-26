@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - App Launcher</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>User Login</h1>
+            <form id="userLoginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <button type="submit" class="auth-btn">Login</button>
+            </form>
+            <div class="auth-footer">
+                <a href="forgot-password.html">Forgot Password?</a>
+                <p>Don't have an account? <a href="register.html">Register here</a></p>
+                <a href="login.html" class="back-link">← Back to Login Options</a>
+            </div>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html> 

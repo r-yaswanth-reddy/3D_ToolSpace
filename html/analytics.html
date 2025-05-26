@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - 3D ToolSpace</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles/analytics.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="analytics-container">
+        <header class="analytics-header">
+            <h1>Usage Analytics</h1>
+            <div class="header-actions">
+                <select id="timeRange" class="select-input">
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                </select>
+                <button id="exportBtn" class="btn-secondary">Export Data</button>
+                <a href="dashboard.html" class="btn-secondary">Back to Dashboard</a>
+            </div>
+        </header>
+
+        <div class="analytics-grid">
+            <div class="analytics-card">
+                <h2>Tool Usage Overview</h2>
+                <canvas id="toolUsageChart"></canvas>
+            </div>
+
+            <div class="analytics-card">
+                <h2>Daily Activity</h2>
+                <canvas id="dailyActivityChart"></canvas>
+            </div>
+
+            <div class="analytics-card">
+                <h2>Session Duration</h2>
+                <canvas id="sessionDurationChart"></canvas>
+            </div>
+
+            <div class="analytics-card">
+                <h2>Popular Features</h2>
+                <canvas id="featuresChart"></canvas>
+            </div>
+        </div>
+
+        <div class="analytics-summary">
+            <div class="summary-card">
+                <h3>Total Sessions</h3>
+                <p id="totalSessions">0</p>
+            </div>
+            <div class="summary-card">
+                <h3>Average Session Duration</h3>
+                <p id="avgSessionDuration">0 min</p>
+            </div>
+            <div class="summary-card">
+                <h3>Most Used Tool</h3>
+                <p id="mostUsedTool">-</p>
+            </div>
+            <div class="summary-card">
+                <h3>Total Tools Used</h3>
+                <p id="totalToolsUsed">0</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/analytics.js"></script>
+</body>
+</html> 
