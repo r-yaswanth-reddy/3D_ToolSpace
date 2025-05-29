@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brave Search</title>
+    <link rel="stylesheet" href="../styles/brave.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="brave-card">
+        <div class="content">
+            <img src="../images/brave.jpeg" alt="Brave Logo">
+            <h2>Brave Search</h2>
+            <div class="search-container">
+                <form id="search-form" class="search-box">
+                    <input type="text" id="search-input" placeholder="Search with Brave..." autocomplete="off">
+                    <button type="submit" id="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <div id="search-results" class="search-results"></div>
+                <div class="search-history">
+                    <div class="history-header">
+                        <h3>Recent Searches</h3>
+                        <button id="clear-history" class="clear-history-btn" title="Clear History">
+                            <i class="fas fa-trash"></i>
+                            Clear
+                        </button>
+                    </div>
+                    <div id="search-history" class="history-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/brave.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="../styles/notes.css">
+    <script src="../js/notes.js" defer></script>
+    <!-- Add Font Awesome for the plus icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Notes Card -->
+    <div class="notes-card">
+        <div class="content">
+            <img src="../images/notes.jpeg" alt="Notes">
+            <h2>Notes</h2>
+            <div class="notes-container">
+                <!-- Notes List (shown by default) -->
+                <div class="notes-list" id="notes-list">
+                    <!-- Saved notes will appear here -->
+                </div>
+                
+                <!-- Add Note Button -->
+                <button onclick="showNewNoteForm()" class="add-note-btn">
+                    <i class="fas fa-plus"></i>
+                </button>
+
+                <!-- New Note Form (hidden by default) -->
+                <div id="new-note-form" class="new-note-form" style="display: none;">
+                    <div class="form-content">
+                        <input type="text" id="note-title" placeholder="Note Title" class="note-title-input">
+                        <textarea id="note-content" placeholder="Write your note here..." class="note-content"></textarea>
+                        <div class="form-buttons">
+                            <button onclick="saveNote()" class="save-btn">Save</button>
+                            <button onclick="hideNewNoteForm()" class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

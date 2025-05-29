@@ -34,3 +34,8 @@ function calculate() {
 document.addEventListener('DOMContentLoaded', () => {
     display = document.getElementById('input1');
 });
+
+// Make functions globally accessible
+window.appendToDisplay = appendToDisplay;
+window.clearDisplay = clearDisplay; 
+window.calculate = calculate;
