@@ -5,7 +5,7 @@ let currentUser = null;
 function checkAuth() {
     const token = localStorage.getItem('authToken');
     if (!token) {
-        window.location.href = '/html/login.html';
+        window.location.href = '../login.html';
         return false;
     }
     return true;
@@ -19,7 +19,7 @@ async function handleLogin(email, password) {
         if (response.success) {
             localStorage.setItem('authToken', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
-            window.location.href = '/html/dashboard.html';
+            window.location.href = '../html/dashboard.html';
         } else {
             throw new Error(response.message);
         }
@@ -32,7 +32,7 @@ async function handleLogin(email, password) {
 function handleLogout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
-    window.location.href = '/html/login.html';
+    window.location.href = '../login.html';
 }
 
 // Handle password reset request
@@ -58,7 +58,7 @@ async function handlePasswordReset(token, newPassword) {
         if (response.success) {
             showSuccess('Your password has been successfully reset.');
             setTimeout(() => {
-                window.location.href = '/html/login.html';
+                window.location.href = '../html/login.html';
             }, 2000);
         } else {
             throw new Error(response.message);

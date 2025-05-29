@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Set up event listeners
     setupEventListeners();
+    setupBackToTop();
 });
 
 function loadUserData() {
@@ -153,4 +154,25 @@ style.textContent = `
         animation-delay: 0.4s;
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+function setupBackToTop() {
+    const backToTopButton = document.getElementById('backToTop');
+    
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+
+    // Smooth scroll to top when clicked
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+} 
