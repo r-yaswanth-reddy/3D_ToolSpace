@@ -23,7 +23,7 @@ const userschema = mongoose.Schema({
         trim: true,
         select: false,
     },
-    verifed: {
+    verified: {
         type: Boolean,
         default: false,
     },
@@ -48,4 +48,4 @@ const userschema = mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model("User", userschema)
+module.exports = mongoose.model("user", userschema)
