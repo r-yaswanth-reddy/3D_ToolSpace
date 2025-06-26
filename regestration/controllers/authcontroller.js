@@ -6,19 +6,23 @@ const { transport } = require("../middlewares/sendMail")
 const { exist } = require('joi')
 
 
-
-
 exports.signup = async (req, res) => {
-    const  {email, password} = req.body
+    const  {username, email, password} = req.body
     try { 
         
-        const {error, value} = signupSchema.validate({email, password})
+        const {error, value} = signupSchema.validate({username, email, password})
 
         if(error){
             return res.status(401).json({success: false, message: error.details[0].message})
         }
 
-        const existUser = await user.findOne({email})
+        const existUser = await user.findOne({
+            $or: [
+                {username: username},
+                {email: email}
+                
+            ]
+        })
 
         if(existUser){
             return res.status(401).json({success: false, message: "user already exists"})
@@ -27,6 +31,7 @@ exports.signup = async (req, res) => {
         const hashedoutput = await dohash(password, 12)
 
         const newuser = new user({
+            username,
             email,
             password: hashedoutput,
 
@@ -51,16 +56,16 @@ exports.signup = async (req, res) => {
 }
 
 exports.signin = async (req, res) => {
-    const {email, password} = req.body
+    const {username, email, password} = req.body
     try {
         
-        const {error, value} = signinSchema.validate({email, password})
+        const {error, value} = signinSchema.validate({username, email, password})
         if(error){             
             return res.status(401).json({success: false, message: error.details[0].message})
         }
 
         const existingUser = await user.findOne({email}).select('+password')
-        
+        console.log(existingUser)
         if(!existingUser){
             return res.status(401).json({success: false, message: "user does not exists!"})
         }
@@ -71,8 +76,17 @@ exports.signin = async (req, res) => {
             return res.status(401).json({success: false, message: "invalid credentials!"})
         }
 
-        const token = jwt.sign({
+        // New check for email verification
+        if (!existingUser.verified) {
+            return res.status(401).json({
+                success: false,
+                verified: false,
+                message: 'Your account is not verified.'
+            });
+        }
 
+        const token = jwt.sign({
+            username: existingUser.username,
             userid: existingUser._id,
             email: existingUser.email,
             verified: existingUser.verified,
@@ -106,6 +120,7 @@ exports.signout = async (req, res) => {
 }
 
 exports.sendVerificationCode = async (req, res) => {
+    console.log("Received request to send verification code");
     const {email} = req.body
     try {
 
@@ -121,7 +136,7 @@ exports.sendVerificationCode = async (req, res) => {
         if(existingUser.verified){
             return res.status(401).json({success: false, message: "user already verified!"})
         }
-
+        
         const codeValue = Math.floor(Math.random() * 100000).toString(); 
         const info = await transport.sendMail({
             from: process.env.NODE_CODE_SENDING_MAIL_ADDRESS,
@@ -129,6 +144,7 @@ exports.sendVerificationCode = async (req, res) => {
             subject: 'verification code',
             html: '<h1>' + codeValue + '</h1>'
         })
+
 
         if(info.accepted[0] === existingUser.email){
             const hashedcode = hmacprocess(codeValue, process.env.HMAC_VERIFICATION_CODE_VALUE);
@@ -228,7 +244,7 @@ exports.changePassword = async (req,res) => {
 
 
 exports.sendforgotpasswordcode = async (req, res) => {
-    const {email} = req.body
+    const {username, email} = req.body
     try {
 
         const existingUser = await user.findOne({email}).select("+verified")

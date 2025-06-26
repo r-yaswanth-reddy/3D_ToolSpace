@@ -2,12 +2,12 @@
 const mongoose = require("mongoose")
 
 const userschema = mongoose.Schema({
-    // username: {
-    //     type: string,
-    //     required: [true, "user name is required"],
-    //     minlength: [5, "user name must be atleast 5 characters"],
+    username: {
+        type: String,
+        required: [true, "user name is required"],
+        minlength: [5, "user name must be atleast 5 characters"],
 
-    // },
+    },
     email: {
         type: String,
         required: [true, "email is required"],

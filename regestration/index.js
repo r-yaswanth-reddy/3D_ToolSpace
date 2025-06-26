@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
 const mongoose = require("mongoose")
+const path = require("path");
 
 const authrouter = require("./router/authrouter")
 
@@ -18,6 +19,8 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
+// app.use(express.static("public"))
+
 mongoose
     .connect(process.env.MONGO_URI).then(()=>{
         console.log("Database connected")
@@ -26,9 +29,14 @@ mongoose
     });
 
 
-app.use("/api/auth", authrouter)
+app.use('/api/auth', require('./router/authrouter'));
 
 
+app.use(express.static(path.join(__dirname, "public")))
+
+// app.get("", (req, res) => {
+//     res.sendFile(__dirname + "/public/signup.html")
+// })
 
 app.get("/", (req, res) => {
     res.json({ message: 'Hello from the server'});

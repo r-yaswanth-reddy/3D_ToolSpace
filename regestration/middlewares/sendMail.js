@@ -13,7 +13,4 @@ const transport = nodemailer.createTransport({
 });
 
 
-console.log("EMAIL:", process.env.NODE_CODE_SENDING_MAIL_ADDRESS);
-console.log("PASS:", process.env.NODE_CODE_SENDING_PASS);
-
 module.exports = { transport };
