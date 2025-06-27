@@ -31,7 +31,7 @@ function saveNote() {
         alert('Please enter both title and content for the note');
         return;
     }
-    console.log('Saving note:', { title, content }),// Debugging log
+
     // Send note to backend
     fetch('/api/notes', {
         method: 'POST',
@@ -39,9 +39,7 @@ function saveNote() {
             'Content-Type': 'application/json'
             // Add authentication headers if needed (e.g., JWT token)
         },
-        
         body: JSON.stringify({ title, content })
-
     })
     .then(response => {
         if (!response.ok) throw new Error('Failed to save note');
@@ -89,18 +87,14 @@ function displayNotes() {
                         <button class="delete-btn" data-id="${note._id}">Delete</button>
                     </div>
                 `;
+                // Attach event listeners for edit and delete
+                noteElement.querySelector('.edit-btn').addEventListener('click', function() {
+                    editNote(note._id);
+                });
+                noteElement.querySelector('.delete-btn').addEventListener('click', function() {
+                    deleteNote(note._id);
+                });
                 notesList.appendChild(noteElement);
-            });
-
-            notesList.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    editNote(this.getAttribute('data-id'));
-                });
-            });
-            notesList.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    deleteNote(this.getAttribute('data-id'));
-                });
             });
         })
         .catch(error => {
@@ -119,14 +113,20 @@ function editNote(id) {
             const form = document.getElementById('new-note-form');
             const titleInput = document.getElementById('note-title');
             const contentInput = document.getElementById('note-content');
-            const saveBtn = document.querySelector('.save-btn');
+            const saveBtn = document.getElementById('save-note-btn');
 
             form.style.display = 'block';
             titleInput.value = note.title;
             contentInput.value = note.content;
 
             saveBtn.textContent = 'Save Changes';
-            saveBtn.onclick = () => updateNote(id);
+            // Remove previous event listeners by cloning
+            const newSaveBtn = saveBtn.cloneNode(true);
+            saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+            newSaveBtn.addEventListener('click', function handler() {
+                updateNote(id);
+            });
+            newSaveBtn.id = 'save-note-btn';
 
             titleInput.focus();
         })
@@ -158,9 +158,13 @@ function updateNote(id) {
         hideNewNoteForm();
         displayNotes();
 
-        const saveBtn = document.querySelector('.save-btn');
+        const saveBtn = document.getElementById('save-note-btn');
         saveBtn.textContent = 'Save';
-        saveBtn.onclick = saveNote;
+        // Remove previous event listeners by cloning
+        const newSaveBtn = saveBtn.cloneNode(true);
+        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+        newSaveBtn.addEventListener('click', saveNote);
+        newSaveBtn.id = 'save-note-btn';
     })
     .catch(error => alert('Error updating note: ' + error.message));
 }
@@ -182,13 +186,26 @@ function deleteNote(id) {
     }
 }
 
-// Display notes when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    displayNotes();
+// Attach event listeners after DOM is loaded
 
-    document.getElementById('add-note-btn').addEventListener('click', showNewNoteForm);
-    document.getElementById('save-btn').addEventListener('click', saveNote);
-    document.getElementById('cancel-btn').addEventListener('click', hideNewNoteForm);
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach save button event listener
+    const saveBtn = document.getElementById('save-note-btn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveNote);
+    }
+    // Attach new note form show button if exists
+    const showFormBtn = document.getElementById('show-new-note-form-btn');
+    if (showFormBtn) {
+        showFormBtn.addEventListener('click', showNewNoteForm);
+    }
+    // Hide form on cancel if cancel button exists
+    const cancelBtn = document.getElementById('cancel-note-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', hideNewNoteForm);
+    }
+    // Display notes on load
+    displayNotes();
 });
 
 // Assuming you have a list of note titles rendered as <li data-id="...">Title</li>

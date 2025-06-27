@@ -1,0 +1,275 @@
+:root {
+    --card-width: 320px;
+    --card-height: 500px;
+    --carousel-radius: 800px;
+    --transition-speed: 0.8s;
+    --card-background: rgba(255, 255, 255, 0.15);
+    --card-border: rgba(255, 255, 255, 0.2);
+    --orange: hsl(35, 100%, 55%);
+    --orange-hover: hsl(35, 100%, 65%);
+    --orange-active: hsl(35, 100%, 75%);
+    --gray: hsl(0, 0%, 30%);
+    --gray-hover: hsl(0, 0%, 40%);
+    --gray-active: hsl(0, 0%, 50%);
+    --text-dark: #666;
+    --scrollbar: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f2f5;
+}
+
+.notes-card {
+    position: absolute;
+    width: var(--card-width);
+    height: var(--card-height);
+    left: calc(50% - var(--card-width) / 2);
+    top: calc(50% - var(--card-height) / 2);
+    background: var(--card-background);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px;
+    transform-style: preserve-3d;
+    transition: transform var(--transition-speed) ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
+    will-change: transform;
+    backface-visibility: visible;
+    user-select: none;
+    pointer-events: all;
+}
+
+.notes-card:active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1) !important;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    backface-visibility: visible;
+}
+
+.content img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.content h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.notes-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-note-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-note-btn:hover { background: var(--orange-hover); transform: scale(1.1); }
+.add-note-btn:active { background: var(--orange-active); transform: scale(0.95); }
+
+.new-note-form {
+    position: absolute;
+    inset: 0;
+    background: var(--card-background);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    z-index: 10;
+    animation: slideIn 0.3s ease;
+    overflow: hidden;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 15px;
+    overflow: hidden;
+}
+
+.note-title-input, .note-content {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    background: white;
+    color: black;
+}
+
+.note-title-input { text-align: center; }
+.note-title-input::placeholder, .note-content::placeholder { color: var(--text-dark); }
+
+.note-content {
+    flex: 1;
+    border-radius: 20px;
+    resize: none;
+    line-height: 1.5;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.save-btn, .cancel-btn {
+    padding: 10px 30px;
+    min-width: 120px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.save-btn {
+    background: var(--orange);
+    color: white;
+}
+
+.save-btn:hover { background: var(--orange-hover); transform: translateY(-2px); }
+.save-btn:active { background: var(--orange-active); transform: translateY(0); }
+
+.cancel-btn {
+    background: var(--gray);
+    color: white;
+}
+
+.cancel-btn:hover { background: var(--gray-hover); transform: translateY(-2px); }
+.cancel-btn:active { background: var(--gray-active); transform: translateY(0); }
+
+.notes-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding-right: 50px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
+}
+
+.note-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s ease;
+}
+
+.note-item:hover { transform: translateX(5px); }
+
+.note-item h3 { color: black; margin-bottom: 8px; font-size: 1em; }
+.note-item p { color: black; font-size: 0.9em; white-space: pre-wrap; }
+.note-item small { color: var(--text-dark); font-size: 0.8em; }
+
+.note-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.note-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.edit-btn { background: var(--orange); color: white; }
+.edit-btn:hover { background: var(--orange-hover); }
+.edit-btn:active { background: var(--orange-active); }
+
+.delete-btn { background: hsl(0, 100%, 50%); color: white; }
+.delete-btn:hover { background: hsl(0, 100%, 60%); }
+.delete-btn:active { background: hsl(0, 100%, 70%); }
+
+.empty-state {
+    text-align: center;
+    color: black;
+    padding: 20px;
+}
+
+.empty-state p {
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+/* Scrollbar Styles */
+.notes-list::-webkit-scrollbar,
+.note-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notes-list::-webkit-scrollbar-track,
+.note-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.notes-list::-webkit-scrollbar-thumb,
+.note-content::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar);
+    border-radius: 3px;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

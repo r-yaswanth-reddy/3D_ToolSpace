@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes</title>
-    <link rel="stylesheet" href="notes.css">
-    <script src="notes.js" defer></script>
+    <link rel="stylesheet" href="../cards/notes.css">
+    <script src="../cards/notes.js" defer></script>
     <!-- Add Font Awesome for the plus icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,7 +13,7 @@
     <!-- Notes Card -->
     <div class="notes-card">
         <div class="content">
-            <img src="notes.jpeg" alt="Notes">
+            <img src="../cards/notes.jpeg" alt="Notes">
             <h2>Notes</h2>
             <div class="notes-container">
                 <!-- Notes List (shown by default) -->
@@ -22,7 +22,7 @@
                 </div>
                 
                 <!-- Add Note Button -->
-                <button id="add-note-btn" class="add-note-btn">
+                <button onclick="showNewNoteForm()" class="add-note-btn">
                     <i class="fas fa-plus"></i>
                 </button>
 
@@ -32,8 +32,8 @@
                         <input type="text" id="note-title" placeholder="Note Title" class="note-title-input">
                         <textarea id="note-content" placeholder="Write your note here..." class="note-content"></textarea>
                         <div class="form-buttons">
-                            <button id="save-btn" class="save-btn">Save</button>
-                            <button id="cancel-btn" class="cancel-btn">Cancel</button>
+                            <button onclick="saveNote()" class="save-btn">Save</button>
+                            <button onclick="hideNewNoteForm()" class="cancel-btn">Cancel</button>
                         </div>
                     </div>
                 </div>
