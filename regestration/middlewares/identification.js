@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-exports.identifier = (req, res, next) => {
+function identification(req, res, next) {
     let token;
     if(req.headers.client === "not-browser"){
         token = req.headers.authorization
@@ -28,5 +28,6 @@ exports.identifier = (req, res, next) => {
     } catch (error) {
         
     }
-
 }
+module.exports = identification;
+module.exports.identifier = identification;

@@ -10,6 +10,7 @@ const mongoose = require("mongoose")
 const path = require("path");
 
 const authrouter = require("./router/authrouter")
+const notesRouter = require('./router/notesrouter');
 
 require("dotenv").config();
 const app = express()
@@ -18,6 +19,7 @@ app.use(helmet())
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
+
 
 // app.use(express.static("public"))
 
@@ -30,9 +32,11 @@ mongoose
 
 
 app.use('/api/auth', require('./router/authrouter'));
+app.use('/api/notes', notesRouter);
 
-
+// app.use(express.static(path.join(__dirname, "public/cards")))
 app.use(express.static(path.join(__dirname, "public")))
+
 
 // app.get("", (req, res) => {
 //     res.sendFile(__dirname + "/public/signup.html")
