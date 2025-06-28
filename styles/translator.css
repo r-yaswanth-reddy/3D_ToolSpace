@@ -1,7 +1,4 @@
 :root {
-    --card-width: 320px;
-    --card-height: 500px;
-    --card-bg: rgba(255, 255, 255, 0.15);
     --card-border: rgba(255, 255, 255, 0.2);
     --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
     --card-shadow-active: 0 12px 40px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -9,7 +6,6 @@
     --orange-hover: hsl(35, 100%, 65%);
     --orange-active: hsl(35, 100%, 75%);
     --text-dark: #666;
-    --scrollbar: rgba(0, 0, 0, 0.2);
     --radius-sm: 8px;
     --radius-md: 15px;
     --radius-lg: 20px;
@@ -36,9 +32,6 @@ body {
     position: absolute;
     inset: 50% auto auto 50%;
     transform: translate(-50%, -50%);
-    width: var(--card-width);
-    height: var(--card-height);
-    background: var(--card-bg);
     backdrop-filter: blur(10px);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
@@ -57,16 +50,15 @@ body {
 }
 
 .content {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 3px;
 }
 
 .content img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
 }
 
@@ -203,15 +195,7 @@ body {
 }
 
 /* History Section Styles */
-.history-section {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-md);
-    padding: 15px;
-    max-height: 120px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
+
 
 .history-header {
     display: flex;

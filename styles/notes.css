@@ -1,6 +1,6 @@
 :root {
-    --card-width: 320px;
-    --card-height: 500px;
+    --card-width: 300px;
+    --card-height: 450px;
     --carousel-radius: 800px;
     --transition-speed: 0.8s;
     --card-background: rgba(255, 255, 255, 0.15);
@@ -75,6 +75,7 @@ body {
     height: 80px;
     object-fit: contain;
     margin-bottom: 5px;
+    border-radius: 8px;
 }
 
 .content h2 {
@@ -119,7 +120,7 @@ body {
 .new-note-form {
     position: absolute;
     inset: 0;
-    background: var(--card-background);
+    background: rgb(12 11 11 / 21%);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 20px;
@@ -163,12 +164,11 @@ body {
     display: flex;
     gap: 10px;
     justify-content: center;
-    padding: 10px 0;
 }
 
 .save-btn, .cancel-btn {
-    padding: 10px 30px;
-    min-width: 120px;
+    padding: 5px;
+    min-width: 90px;
     border: none;
     border-radius: 50px;
     cursor: pointer;

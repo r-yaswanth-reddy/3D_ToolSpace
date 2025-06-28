@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatGPT</title>
+  <link rel="stylesheet" href="../styles/chatgpt.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="chatgpt-container">
+    <img class="im" src="../images/chatgpt.png" alt="ChatGPT Logo" />
+    <header class="chatgpt-header">
+      <span class="chatgpt-title">ChatGPT</span>
+      <button class="toggle-theme-btn" id="toggle-theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      
+    </header>
+
+    <main class="chatgpt-main">
+      <div class="chatgpt-messages" id="messages">
+        <div class="message ai">Hello! How can I help you today?</div>
+      </div>
+    </main>
+
+    <form class="chatgpt-input-area" id="chat-form" autocomplete="off">
+      <input type="text" class="chatgpt-input" id="user-input" placeholder="Send a message..." required />
+      <button type="submit" class="chatgpt-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+
+  <script>
+   // DOM Elements
+const form = document.getElementById('chat-form');
+const input = document.getElementById('user-input');
+const messages = document.getElementById('messages');
+const toggleBtn = document.getElementById('toggle-theme');
+
+// Submit Event
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const userMsg = input.value.trim();
+  if (!userMsg) return;
+
+  // Display user's message
+  addMessage(userMsg, 'user');
+  input.value = '';
+
+  // Simulate AI typing after a short delay
+  setTimeout(() => {
+    simulateTyping("This is a sample AI response. (Integrate backend for real answers!)");
+  }, 700);
+});
+
+// Add message to the DOM
+function addMessage(text, sender) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'message ' + sender;
+  msgDiv.textContent = text;
+  messages.appendChild(msgDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Simulated typing effect for AI
+function simulateTyping(text) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'message ai';
+  messages.appendChild(msgDiv);
+  messages.scrollTop = messages.scrollHeight;
+
+  let i = 0;
+  const interval = setInterval(() => {
+    msgDiv.textContent = text.slice(0, ++i);
+    messages.scrollTop = messages.scrollHeight;
+    if (i >= text.length) clearInterval(interval);
+  }, 30); // Adjust typing speed here
+}
+
+// Toggle light/dark mode
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+  toggleBtn.innerHTML = document.body.classList.contains('light-mode')
+    ? '<i class="fas fa-sun"></i>'
+    : '<i class="fas fa-moon"></i>';
+});
+
+  </script>
+</body>
+</html>
