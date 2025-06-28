@@ -1,26 +1,61 @@
-// Initialize notes from localStorage or empty array
-let notes = JSON.parse(localStorage.getItem('notes')) || [];
+// API endpoint base URL
+const API_BASE = '/api/notes';
+
+// Initialize notes array (will be loaded from backend)
+let notes = [];
+let isEditing = false;
+let editingNoteId = null;
 
 // Function to show the new note form
 function showNewNoteForm() {
     const form = document.getElementById('new-note-form');
     const titleInput = document.getElementById('note-title');
     const contentInput = document.getElementById('note-content');
+    const saveBtn = document.getElementById('save-btn');
     
     form.style.display = 'block';
     titleInput.value = '';
     contentInput.value = '';
     titleInput.focus();
+    
+    // Reset for new note
+    isEditing = false;
+    editingNoteId = null;
+    saveBtn.textContent = 'Save';
 }
 
 // Function to hide the new note form
 function hideNewNoteForm() {
     const form = document.getElementById('new-note-form');
     form.style.display = 'none';
+    
+    // Reset editing state
+    isEditing = false;
+    editingNoteId = null;
+    document.getElementById('save-btn').textContent = 'Save';
 }
 
-// Function to save a new note to the backend
-function saveNote() {
+// Function to fetch all notes from backend
+async function fetchNotes() {
+    try {
+        const response = await fetch(`${API_BASE}/n`);
+        const data = await response.json();
+        
+        if (data.success) {
+            notes = data.notes;
+            displayNotes();
+        } else {
+            console.error('Failed to fetch notes:', data.message);
+            alert('Failed to load notes: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching notes:', error);
+        alert('Error loading notes. Please try again.');
+    }
+}
+
+// Function to save a new note to backend
+async function saveNote() {
     const titleInput = document.getElementById('note-title');
     const contentInput = document.getElementById('note-content');
     
@@ -31,187 +66,207 @@ function saveNote() {
         alert('Please enter both title and content for the note');
         return;
     }
-    console.log('Saving note:', { title, content }),// Debugging log
-    // Send note to backend
-    fetch('/api/notes', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-            // Add authentication headers if needed (e.g., JWT token)
-        },
+    
+    try {
+        const response = await fetch(`${API_BASE}/n`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, content })
+        });
         
-        body: JSON.stringify({ title, content })
-
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Failed to save note');
-        return response.json();
-    })
-    .then(newNote => {
-        // Optionally update the UI with the new note
-        hideNewNoteForm();
-        displayNotes(); // This should now fetch notes from backend, not localStorage
-    })
-    .catch(error => {
-        alert('Error saving note: ' + error.message);
-    });
+        const data = await response.json();
+        
+        if (data.success) {
+            // Hide the form and refresh the notes list
+            hideNewNoteForm();
+            await fetchNotes(); // Refresh notes from backend
+            alert('Note saved successfully!');
+        } else {
+            alert('Failed to save note: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error saving note:', error);
+        alert('Error saving note. Please try again.');
+    }
 }
 
-// Function to display all notes from the backend
+// Function to handle save button click (either save new or update existing)
+function handleSaveClick() {
+    if (isEditing) {
+        updateNote(editingNoteId);
+    } else {
+        saveNote();
+    }
+}
+
+// Function to display all notes
 function displayNotes() {
     const notesList = document.getElementById('notes-list');
     notesList.innerHTML = '';
-
-    fetch('/api/notes')
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to fetch notes');
-            return response.json();
-        })
-        .then(notes => {
-            if (notes.length === 0) {
-                notesList.innerHTML = `
-                    <div class="empty-state">
-                        <p>No notes yet. Click the + button to create one!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            notes.forEach(note => {
-                const noteElement = document.createElement('div');
-                noteElement.className = 'note-item';
-                noteElement.innerHTML = `
-                    <h3>${note.title}</h3>
-                    <p>${note.content}</p>
-                    <small>Created: ${new Date(note.createdAt).toLocaleString()}</small>
-                    <div class="note-actions">
-                        <button class="edit-btn" data-id="${note._id}">Edit</button>
-                        <button class="delete-btn" data-id="${note._id}">Delete</button>
-                    </div>
-                `;
-                notesList.appendChild(noteElement);
-            });
-
-            notesList.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    editNote(this.getAttribute('data-id'));
-                });
-            });
-            notesList.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    deleteNote(this.getAttribute('data-id'));
-                });
-            });
-        })
-        .catch(error => {
-            notesList.innerHTML = `<p>Error loading notes: ${error.message}</p>`;
-        });
+    
+    if (notes.length === 0) {
+        notesList.innerHTML = `
+            <div class="empty-state">
+                <p>No notes yet. Click the + button to create one!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    notes.forEach(note => {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'note-item';
+        
+        // Format the date
+        const dateStr = note.createdAt ? new Date(note.createdAt).toLocaleString() : 'Unknown date';
+        
+        noteElement.innerHTML = `
+            <h3>${note.title}</h3>
+            <p>${note.content}</p>
+            <small>Created: ${dateStr}</small>
+            <div class="note-actions">
+                <button class="edit-btn" data-note-id="${note._id}">Edit</button>
+                <button class="delete-btn" data-note-id="${note._id}">Delete</button>
+            </div>
+        `;
+        notesList.appendChild(noteElement);
+    });
+    
+    // Setup event listeners for the newly created buttons
+    setupNoteActionListeners();
 }
 
 // Function to edit a note
 function editNote(id) {
-    fetch(`/api/notes/${id}`)
-        .then(res => {
-            if (!res.ok) throw new Error('Failed to fetch note');
-            return res.json();
-        })
-        .then(note => {
-            const form = document.getElementById('new-note-form');
-            const titleInput = document.getElementById('note-title');
-            const contentInput = document.getElementById('note-content');
-            const saveBtn = document.querySelector('.save-btn');
-
-            form.style.display = 'block';
-            titleInput.value = note.title;
-            contentInput.value = note.content;
-
-            saveBtn.textContent = 'Save Changes';
-            saveBtn.onclick = () => updateNote(id);
-
-            titleInput.focus();
-        })
-        .catch(error => alert('Error loading note: ' + error.message));
-}
-
-// Function to update an existing note
-function updateNote(id) {
+    const note = notes.find(n => n._id === id);
+    if (!note) return;
+    
+    const form = document.getElementById('new-note-form');
     const titleInput = document.getElementById('note-title');
     const contentInput = document.getElementById('note-content');
+    const saveBtn = document.getElementById('save-btn');
+    
+    // Show the form
+    form.style.display = 'block';
+    
+    // Fill the input fields
+    titleInput.value = note.title;
+    contentInput.value = note.content;
+    
+    // Set editing state
+    isEditing = true;
+    editingNoteId = id;
+    saveBtn.textContent = 'Save Changes';
+    
+    // Focus on the title input
+    titleInput.focus();
+}
+
+// Function to update an existing note in backend
+async function updateNote(id) {
+    const titleInput = document.getElementById('note-title');
+    const contentInput = document.getElementById('note-content');
+    
     const title = titleInput.value.trim();
     const content = contentInput.value.trim();
-
+    
     if (!title || !content) {
         alert('Please enter both title and content for the note');
         return;
     }
-
-    fetch(`/api/notes/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content })
-    })
-    .then(res => {
-        if (!res.ok) throw new Error('Failed to update note');
-        return res.json();
-    })
-    .then(() => {
-        hideNewNoteForm();
-        displayNotes();
-
-        const saveBtn = document.querySelector('.save-btn');
-        saveBtn.textContent = 'Save';
-        saveBtn.onclick = saveNote;
-    })
-    .catch(error => alert('Error updating note: ' + error.message));
-}
-
-// Function to delete a note
-function deleteNote(id) {
-    if (confirm('Are you sure you want to delete this note?')) {
-        fetch(`/api/notes/${id}`, {
-            method: 'DELETE'
-        })
-        .then(res => {
-            if (!res.ok) throw new Error('Failed to delete note');
-            return res.json();
-        })
-        .then(() => {
-            displayNotes();
-        })
-        .catch(error => alert('Error deleting note: ' + error.message));
+    
+    try {
+        const response = await fetch(`${API_BASE}/n/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, content })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Hide the form and refresh the display
+            hideNewNoteForm();
+            await fetchNotes(); // Refresh notes from backend
+            alert('Note updated successfully!');
+        } else {
+            alert('Failed to update note: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error updating note:', error);
+        alert('Error updating note. Please try again.');
     }
 }
 
-// Display notes when the page loads
+// Function to delete a note from backend
+async function deleteNote(id) {
+    if (confirm('Are you sure you want to delete this note?')) {
+        try {
+            const response = await fetch(`${API_BASE}/n/${id}`, {
+                method: 'DELETE'
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                await fetchNotes(); // Refresh notes from backend
+                alert('Note deleted successfully!');
+            } else {
+                alert('Failed to delete note: ' + data.message);
+            }
+        } catch (error) {
+            console.error('Error deleting note:', error);
+            alert('Error deleting note. Please try again.');
+        }
+    }
+}
+
+// Function to setup main event listeners
+function setupEventListeners() {
+    // Add note button
+    const addBtn = document.getElementById('add-note-btn');
+    if (addBtn) {
+        addBtn.addEventListener('click', showNewNoteForm);
+    }
+    
+    // Save button - handles both save and update
+    const saveBtn = document.getElementById('save-btn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', handleSaveClick);
+    }
+    
+    // Cancel button
+    const cancelBtn = document.getElementById('cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', hideNewNoteForm);
+    }
+}
+
+// Function to setup note action event listeners (for edit/delete buttons)
+function setupNoteActionListeners() {
+    // Edit buttons
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const noteId = this.getAttribute('data-note-id');
+            editNote(noteId);
+        });
+    });
+    
+    // Delete buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const noteId = this.getAttribute('data-note-id');
+            deleteNote(noteId);
+        });
+    });
+}
+
+// Load notes when the page loads
 document.addEventListener('DOMContentLoaded', function() {
-    displayNotes();
-
-    document.getElementById('add-note-btn').addEventListener('click', showNewNoteForm);
-    document.getElementById('save-btn').addEventListener('click', saveNote);
-    document.getElementById('cancel-btn').addEventListener('click', hideNewNoteForm);
+    setupEventListeners();
+    fetchNotes();
 });
-
-// Assuming you have a list of note titles rendered as <li data-id="...">Title</li>
-document.querySelectorAll('.note-title').forEach(item => {
-  item.addEventListener('click', function() {
-    const noteId = this.getAttribute('data-id');
-    fetch(`/api/notes/${noteId}`)
-      .then(res => res.json())
-      .then(note => {
-        document.getElementById('note-content').innerText = note.content;
-        // Optionally, set the title too
-        document.getElementById('note-title').innerText = note.title;
-      });
-  });
-});
-
-// // On form submit
-// fetch('/api/notes', {
-//   method: 'POST',
-//   headers: { 'Content-Type': 'application/json' },
-//   body: JSON.stringify({ title, content })
-// })
-// .then(res => res.json())
-// .then(newNote => {
-//   // Add new note to the UI
-// });

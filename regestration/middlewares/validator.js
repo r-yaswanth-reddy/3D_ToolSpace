@@ -25,4 +25,10 @@ const changePasswordSchema = joi.object({
     oldpassword: joi.string().required().pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$'))
 })
 
-module.exports = {signupSchema, signinSchema, acceptedCodeSchema, changePasswordSchema}
+// In validator.js, you could add:
+const noteSchema = joi.object({
+    title: joi.string().min(1).max(200).required(),
+    content: joi.string().min(1).max(10000).required()
+});
+
+module.exports = {signupSchema, signinSchema, acceptedCodeSchema, changePasswordSchema, noteSchema}

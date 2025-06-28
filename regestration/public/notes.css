@@ -1,6 +1,6 @@
 :root {
-    --card-width: 320px;
-    --card-height: 500px;
+    --card-width: 300px;
+    --card-height: 450px;
     --carousel-radius: 800px;
     --transition-speed: 0.8s;
     --card-background: rgba(255, 255, 255, 0.15);
@@ -75,6 +75,7 @@ body {
     height: 80px;
     object-fit: contain;
     margin-bottom: 5px;
+    border-radius: 8px;
 }
 
 .content h2 {
