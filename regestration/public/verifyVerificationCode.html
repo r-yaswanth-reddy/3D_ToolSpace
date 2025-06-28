@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Verification Code - 3D ToolSpace</title>
+    <link rel="stylesheet" href="verifyVerificationCode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="signup-box">
+            <div class="logo">
+                <h1>3D ToolSpace</h1>
+            </div>
+            <h2>Enter Verification Code</h2>
+            <p class="subtitle">Enter the code sent to your email</p>
+            <form id="verifyCodeForm" class="signup-form">
+                <div class="form-group">
+                    <input type="text" id="verificationCode" name="verificationCode" required>
+                    <label for="verificationCode">Verification Code</label>
+                </div>
+                <button type="submit" class="signup-button">Verify</button>
+            </form>
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+    <script src="verifyVerificationCode.js"></script>
+</body>
+</html> 
