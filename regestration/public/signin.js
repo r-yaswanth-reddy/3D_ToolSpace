@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = 'translator.html'; // Or your carousel page
                 
             } else {
+                // Check if user does not exist
+                if (result.message && result.message.toLowerCase().includes('user does not exist')) {
+                    messageDiv.textContent = 'User does not exist. Please register first.';
+                    return;
+                }
                 messageDiv.textContent = result.message || 'Signin failed.';
                 if (result.verified === false || result.verified === undefined) {
                     alert('Your email is not verified. Please verify your email.');

@@ -57,6 +57,7 @@
             align-items: center;
             justify-content: center;
             perspective: 1000px;
+            padding-top: 80px;
         }
 
         .carousel {
@@ -180,21 +181,86 @@
                 --card-height: 360px;
             }
         }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 64px;
+            background: var(--card-background);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            z-index: 300;
+        }
+        .top-bar .left-group, .top-bar .center-group, .top-bar .right-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .top-bar .side-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .top-bar .side-btn:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+        .top-bar .nav-button {
+            position: static;
+            transform: none;
+            width: 60px;
+            height: 60px;
+            font-size: 18px;
+            margin-top: 800px;
+        }
+        @media (max-width: 768px) {
+            .top-bar {
+                height: 52px;
+                padding: 0 8px;
+            }
+            .carousel-container {
+                padding-top: 60px;
+            }
+        }
     </style>
 </head>
 <body class="bogy">
+    <div class="top-bar">
+        <div class="left-group">
+            <button class="nav-button prev-btn" title="Previous">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="center-group">
+            <button onclick="window.location.href='contact.html'" title="Contact" class="side-btn"><i class="fas fa-address-book"></i> Contact</button>
+            <button onclick="window.location.href='help.html'" title="Help" class="side-btn"><i class="fas fa-question-circle"></i> Help</button>
+            <button onclick="window.location.href='analytics.html'" title="Analytics" class="side-btn"><i class="fas fa-chart-bar"></i> Analytics</button>
+            <button onclick="window.location.href='dashboard.html'" title="Dashboard" class="side-btn"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+            <button onclick="signOut()" title="Sign Out" class="side-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+        <div class="right-group">
+            <button class="nav-button next-btn" title="Next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
     <div class="carousel-container">
-        <button class="nav-button prev-btn" title="Previous">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        
         <div class="carousel">
             <!-- App cards will be dynamically inserted here -->
         </div>
-        
-        <button class="nav-button next-btn" title="Next">
-            <i class="fas fa-chevron-right"></i>
-        </button>
     </div>
 
     <!-- JavaScript -->
@@ -207,9 +273,9 @@
                 command: 'start chrome'
             },
             {
-                name: 'Brave',
-                path: 'brave.html',
-                command: 'start brave'
+                name: 'ChatGPT',
+                path: 'Chat-gpt/chatgpt.html',
+                command: 'start chatgpt'
             },
             {
                 name: 'Notes',
@@ -366,6 +432,13 @@
             const direction = e.deltaY > 0 ? 1 : -1;
             rotateOneStep(direction);
         }, { passive: false });
+
+        function signOut() {
+            // Clear session/cookies and redirect to login
+            localStorage.clear();
+            document.cookie = '';
+            window.location.href = '../login.html';
+        }
 
         // Start
         createAppCards();

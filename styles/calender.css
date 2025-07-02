@@ -1,19 +1,10 @@
 :root {
-    --card-width: 320px;
-    --card-height: 500px;
-    --carousel-radius: 800px;
     --transition-speed: 0.8s;
-    --card-background: rgba(255, 255, 255, 0.15);
     --card-border: rgba(255, 255, 255, 0.2);
 }
 
 .card
 {
-    position: absolute;
-    width: var(--card-width);
-    height: var(--card-height);
-    left: calc(50% - var(--card-width) / 2);
-    top: calc(50% - var(--card-height) / 2);
     transform-style: preserve-3d;
     transition: transform var(--transition-speed) ease-in-out;
     pointer-events: all;
@@ -24,11 +15,11 @@
     background: var(--card-background);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    padding: 20px;
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 4px 8px rgba(0, 0, 0, 0.2); 
     border: 1px solid var(--card-border);
+    overflow: hidden;
 }
 
 .content
@@ -45,10 +36,11 @@
 }
 
 .content img{
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     object-fit: contain;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+    margin-top: 30px;
 }
 
 .content h2{
@@ -66,14 +58,24 @@
     transform: scale(1.1) !important;
 }
 
-.calender{
+.calender {
     width: 100%;
-    height: 250px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 40px;
-    margin-bottom: 80px;
-    
+    justify-content: flex-start;
+    overflow: hidden;
+    margin-left: 0px;
+}
+
+.calender iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    min-height: 300px;
+    max-height: 100%;
+    display: block;
 }

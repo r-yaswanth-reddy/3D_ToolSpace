@@ -1,40 +1,40 @@
 :root {
-    --card-width: 320px;
-    --card-height: 500px;
+    --card-width: 280px;
+    --card-height: 430px;
     --carousel-radius: 800px;
-    --transition-speed: 0.8s;
-    --card-background: rgba(255, 255, 255, 0.15);
+    --transition-speed: 0.5s;
+    --card-background: rgba(255, 255, 255, 0.2);
     --card-border: rgba(255, 255, 255, 0.2);
 }
 
 .calculator-card {
+    width: 260px;
+    height: 403px;
     position: absolute;
-    width: var(--card-width);
-    height: var(--card-height);
-    left: calc(50% - var(--card-width) / 2);
-    top: calc(50% - var(--card-height) / 2);
     transform-style: preserve-3d;
     transition: transform var(--transition-speed) ease-in-out;
     pointer-events: all;
     user-select: none;
-    will-change: transform;
     backface-visibility: visible;
     cursor: pointer;
     background: var(--card-background);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 30px;
     padding: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--card-border);
     color: black;
+    margin-top: 11px;
+    margin-left: 13px;
+    padding-right: 0px;
 }
 
 .content {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 85%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 1px;
     align-items: center;
 }
 
@@ -64,13 +64,13 @@
 .calculator-card .content .operations {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 2px;
     height: 100%;
 }
 
 #input1 {
-    width: 100%;
-    height: 50px;
+    width: 90%;
+    height: 40px;
     border: none;
     text-align: right;
     font-size: 1.5em;
@@ -83,14 +83,14 @@
 .buttons0 {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: 6px;
+    gap: 1px;
     height: calc(100% - 60px);
 }
 
 .buttons00 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 1px;
 }
 
 .buttons01 {
@@ -100,15 +100,16 @@
 }
 
 button {
-    border: none;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
     font-size: 1.2em;
     font-weight: bold;
-    padding: 8px;
+    padding: 6px;
     background-color: rgba(255, 255, 255, 0.1);
     color: black;
-    transition: all 0.2s ease;
+    background-color: wheat;
+    margin-top: 2px;
 }
 
 button:hover {
