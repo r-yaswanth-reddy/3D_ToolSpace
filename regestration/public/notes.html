@@ -22,7 +22,7 @@
                 </div>
                 
                 <!-- Add Note Button -->
-                <button onclick="showNewNoteForm()" class="add-note-btn">
+                <button id="add-note-btn" class="add-note-btn">
                     <i class="fas fa-plus"></i>
                 </button>
 
@@ -32,8 +32,8 @@
                         <input type="text" id="note-title" placeholder="Note Title" class="note-title-input">
                         <textarea id="note-content" placeholder="Write your note here..." class="note-content"></textarea>
                         <div class="form-buttons">
-                            <button onclick="saveNote()" class="save-btn">Save</button>
-                            <button onclick="hideNewNoteForm()" class="cancel-btn">Cancel</button>
+                            <button id="save-btn" class="save-btn">Save</button>
+                            <button id="cancel-btn" class="cancel-btn">Cancel</button>
                         </div>
                     </div>
                 </div>

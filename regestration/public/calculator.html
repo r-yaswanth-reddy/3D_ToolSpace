@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+    <script src="calculator.js" defer></script>
+</head>
+<body>
+    <!-- Calculator Card -->
+    <div class="calculator-card">
+        <div class="content">
+            <img src="calculator.png" alt="Calculator">
+            <h2>Calculator</h2> 
+            <div class="operations">
+                <input id="input1" placeholder="0">
+                <div class="buttons0">
+                    <div class="buttons00">
+                        <button onclick="clearDisplay()" class="operator-btn">CE</button>
+                        <button onclick="appendToDisplay('.')">.</button>
+                        <button onclick="appendToDisplay('0')">0</button>
+                        <button onclick="appendToDisplay('1')">1</button>
+                        <button onclick="appendToDisplay('2')">2</button>
+                        <button onclick="appendToDisplay('3')">3</button>
+                        <button onclick="appendToDisplay('4')">4</button>
+                        <button onclick="appendToDisplay('5')">5</button>
+                        <button onclick="appendToDisplay('6')">6</button>
+                        <button onclick="appendToDisplay('7')">7</button>
+                        <button onclick="appendToDisplay('8')">8</button>
+                        <button onclick="appendToDisplay('9')">9</button>
+                    </div>
+                    <div class="buttons01">
+                
+                        <button onclick="appendToDisplay('+')" class="operator-btn">+</button>
+                        <button onclick="appendToDisplay('-')" class="operator-btn">-</button>
+                        <button onclick="appendToDisplay('%')" class="operator-btn">%</button>
+                        <button onclick="appendToDisplay('/')" class="operator-btn">/</button>
+                        <button onclick="appendToDisplay('*')" class="operator-btn">*</button>
+                        <button onclick="calculate()">=</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+
+</body>
+</html>

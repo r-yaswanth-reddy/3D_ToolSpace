@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(result);
             if (result.success) {
                   // After successful login
-                window.location.href = 'notes.html'; // Or your carousel page
+                localStorage.setItem("token", result.token);
+                window.location.href = 'translator.html'; // Or your carousel page
                 
             } else {
                 messageDiv.textContent = result.message || 'Signin failed.';

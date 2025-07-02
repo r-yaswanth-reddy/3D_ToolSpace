@@ -1,6 +1,6 @@
 const express = require("express")
 const authcontroller = require("../controllers/authcontroller")
-const identifier = require("../middlewares/identification").identifier
+const identifier = require("../middlewares/identification")
 const router = express.Router()
 
 router.post("/signup" , authcontroller.signup)

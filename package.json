@@ -1,0 +1,29 @@
+{
+  "name": "3d_toolspace",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/r-yaswanth-reddy/3D_ToolSpace#readme",
+  "bugs": {
+    "url": "https://github.com/r-yaswanth-reddy/3D_ToolSpace/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r-yaswanth-reddy/3D_ToolSpace.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "auth.js",
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "dev": "node --watch --trace-warnings --env-file=.env index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1",
+    "nodemailer": "^7.0.4"
+  }
+}
