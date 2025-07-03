@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const noteSchema = new mongoose.Schema({
   // Uncomment user field - this is essential for user-specific notes
-  //user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   title: { type: String, required: true },
   content: { type: String, required: true },
   // Uncomment createdAt - frontend expects this field

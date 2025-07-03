@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 alert('Email successfully verified!');
                 localStorage.removeItem('verifyEmail');
-                window.location.href = '/html/carousel.html';
+                window.location.href = 'carousel.html';
             } else {
                 messageDiv.style.color = '#d93025';
                 messageDiv.textContent = result.message || 'Verification failed.';

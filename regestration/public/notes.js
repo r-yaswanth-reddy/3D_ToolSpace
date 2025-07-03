@@ -45,7 +45,7 @@ async function fetchNotes() {
             }
         });
         const data = await response.json();
-        
+        console.log(data);
         if (data.success) {
             notes = data.notes;
             displayNotes();

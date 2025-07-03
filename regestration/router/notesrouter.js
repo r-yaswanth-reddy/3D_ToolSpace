@@ -1,22 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const notesController = require('../controllers/notescontroller');
+const identification = require('../middlewares/identification'); // Auth middleware
 
-// No authentication middleware for now as requested
+router.use(identification); // Protect all routes
 
 // Get all notes
-router.get('/n', notesController.getNotes);
+router.get('/', notesController.getNotes);
 
 // Get a single note by ID
-router.get('/n/:id', notesController.getNoteById);
+router.get('/:id', notesController.getNoteById);
 console.log("Notes router initialized");
 // Create a new note
-router.post('/n', notesController.createNote);
+router.post('/', notesController.createNote);
 
 // Update a note by ID
-router.put('/n/:id', notesController.updateNote);
+router.put('/:id', notesController.updateNote);
 
 // Delete a note by ID  
-router.delete('/n/:id', notesController.deleteNote);
+router.delete('/:id', notesController.deleteNote);
 
 module.exports = router;

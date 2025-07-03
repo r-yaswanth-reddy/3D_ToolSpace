@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Card</title>
+    <link rel="stylesheet" href="chatgpt.css">
+</head>
+<body>
+    <div class="chatgpt-card">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Chat History</h3>
+                <button class="close-btn" id="closeSidebar">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="new-chat-btn" id="newChatBtn">+ New Chat</button>
+            <div class="chat-history" id="chatHistory">
+                <!-- Chat items will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <button class="menu-btn" id="menuBtn">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+            
+            <div class="title-section">
+                <h1 class="title">ChatGPT</h1>
+                <svg class="dropdown-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            
+            <button class="settings-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="welcome-section" id="welcomeSection">
+                <h2 class="welcome-title">What can I help with?</h2>
+            </div>
+            <div class="chat-container" id="chatContainer" style="display: none;">
+                <div class="messages-container" id="messagesContainer">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-container">
+                <input type="text" class="message-input" id="messageInput" placeholder="Ask anything">
+                
+                <button class="send-btn" id="sendBtn" style="display: none;">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                        <path d="M15 1L1 8l4 1 2 6 2-3 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="chatgpt.js"></script>
+</body>
+</html>

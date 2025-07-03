@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                   // After successful login
                 localStorage.setItem("token", result.token);
-                window.location.href = 'translator.html'; // Or your carousel page
+                window.location.href = 'carousel.html'; // Or your carousel page
                 
             } else {
                 // Check if user does not exist

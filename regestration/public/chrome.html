@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chrome Search</title>
+  <link rel="stylesheet" href="chrome.css"/>
+  <script src="chrome.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="chrome-card">
+    <div class="content">
+      <img src="chrome.jpeg" alt="Chrome Logo" />
+      <h2>Chrome Search</h2>
+
+      <div class="search-container">
+        <form id="search-form">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search with Chrome..." />
+            <button type="submit" id="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Scrollable search results only -->
+        <div class="search-results-wrapper">
+          <div id="search-results" class="search-results">
+            <a href="#">Results will be shown here</a>
+          </div>
+        </div>
+
+        <!-- Always visible recent searches -->
+        <div class="history-header">
+          <h3>Recent Searches</h3>
+          <button id="clear-history" class="clear-history-btn">
+            <i class="fas fa-trash"></i> Clear History
+          </button>
+        </div>
+        <div id="search-history" class="history-list">
+          <div>Hello</div>
+          <div>Weather</div>
+          <div>OpenAI</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
